@@ -1,7 +1,7 @@
-curr=input('enter who will start the game x or 0 ? : ')
+import random
 
-print(f'{curr}  start the game ')
 def print_board(b):
+
     print(f'{b[0]} | {b[1]} | {b[2]}')
     print('--+---+--')
     print(f'{b[3]} | {b[4]} | {b[5]}')
@@ -9,39 +9,51 @@ def print_board(b):
     print(f'{b[6]} | {b[7]} | {b[8]}')
     print('--+---+--')
 
-
 def winner(board,player):
-    win_chance=[
+    win_rate=[
         (0,1,2),(3,4,5),(6,7,8),
         (0,3,6),(1,4,7),(2,5,8),
         (0,4,8),(2,4,6)
         ]
-    
-    for a,b,c in win_chance:
-        if board[a]==board[b]==board[c]==player:
+    for x,y,z in win_rate:
+        if board[x]==board[y]==board[z]==player:
             return True
     return False
-
+    
 def tic_tac_toe():
     board=[' ']*9
-    current=curr
+    curr='x'
     for _ in range(9):
         print_board(board)
-        play=int(input(f'player {current}  pick between  between (0-8):  '))
-        if board[play]!=' ':
-            print('invalid entry')
-            continue
-        board[play]=current
-    
-        if winner(board,current):
-            print_board(board)
-            print(f'congrats {current} you won !!') 
+        if curr=='x':
+            play=int(input(f'player {curr} enter your choice betweeon position (0-8): '))
+            if board[play]!=' ':
+                print('inavlid')
+                continue
+        else:
+            empty=[i for i,spot in enumerate(board) if spot==' ']
+            play=random.choice(empty)
+            print(f'computer chooses {play}')
+          
+            
+        board[play]=curr
+        if winner(board,curr):
+            if curr=='x':
+                print_board(board)
+                print('congrats player you won 🤩🥳!!')
+            else:
+                print_board(board)
+                print('computer won !!')
             return
         
-        current='x' if current=='o' else 'o'
+        curr='o' if curr=='x' else 'x'
     print_board(board)
     print('its a draw')
 
-
 tic_tac_toe()
+    
+    
+    
+    
+        
     
